@@ -7,12 +7,10 @@ interface Balance {
   total: number;
 }
 
-
 class TransactionsRepository {
   private transactions: Transaction[];
+
   private Total: number[] = [];
-
-
 
   constructor() {
     this.transactions = [];
@@ -20,52 +18,49 @@ class TransactionsRepository {
 
   public all(): Transaction[] {
     // TODO
-    return this.transactions
+    return this.transactions;
   }
-  public getTotal(): number[] {
-    this.Total.splice(0)
-    return this.Total
-  }
-  public getBalance(): Balance {
 
+  public getTotal(): number[] {
+    this.Total.splice(0);
+    return this.Total;
+  }
+
+  public getBalance(): Balance {
     // TODO 'income' | 'outcome'
-    let inComeArr: number[] = [0]
-    let outComeArr: number[] = [0]
+    const inComeArr: number[] = [0];
+    const outComeArr: number[] = [0];
 
     this.transactions.forEach(e => {
       if (e.type === 'income') {
-        inComeArr.push(e.value)
+        inComeArr.push(e.value);
       }
-
-    })
+    });
     this.transactions.forEach(e => {
       if (e.type === 'outcome') {
-        outComeArr.push(e.value)
+        outComeArr.push(e.value);
       }
+    });
 
-    })
-
-    let income = inComeArr.reduce((ac, cv) => ac + cv)
-    let outcome = outComeArr.reduce((ac, cv) => ac + cv)
-    const total = income - outcome
-    this.Total.push(total)
+    const income = inComeArr.reduce((ac, cv) => ac + cv);
+    const outcome = outComeArr.reduce((ac, cv) => ac + cv);
+    const total = income - outcome;
+    this.Total.push(total);
     const balance = {
       income,
       outcome,
-      total
-    }
+      total,
+    };
 
-    return balance
-
+    return balance;
   }
 
   public create({ title, type, value }: Omit<Transaction, 'id'>): Transaction {
-    const transaction = new Transaction({ title, type, value })
-    this.transactions.push(transaction)
-    this.getBalance()
+    const transaction = new Transaction({ title, type, value });
+    this.transactions.push(transaction);
+    this.getBalance();
 
-    return transaction
-
+    return transaction;
   }
 }
 

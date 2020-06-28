@@ -17,7 +17,12 @@ class CreateTransactionService {
     this.transactionsRepository = transactionsRepository;
   }
 
-  public execute({ title, type, value, total }: RequestDTO): Transaction {
+  public execute({
+    title,
+    type,
+    value,
+    total,
+  }: RequestDTO): Transaction | undefined {
     const createTransaction = this.transactionsRepository.create({
       title,
       type,
@@ -25,6 +30,8 @@ class CreateTransactionService {
     });
     if (Number.isNaN(Number(value))) {
       throw new Error('The Field Value needs to be a number');
+      // // eslint-disable-next-line no-unreachable
+      // return undefined;
     }
     const checkTotal = Math.sign(total[0]);
     if (checkTotal === -1) {
