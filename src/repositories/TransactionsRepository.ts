@@ -7,15 +7,6 @@ interface Balance {
   total: number;
 }
 
-interface createDTO {
-  title: string;
-
-  value: number;
-
-  type: 'income' | 'outcome';
-
-
-}
 
 class TransactionsRepository {
   private transactions: Transaction[];
@@ -68,7 +59,7 @@ class TransactionsRepository {
 
   }
 
-  public create({ title, type, value }: createDTO): Transaction {
+  public create({ title, type, value }: Omit<Transaction, 'id'>): Transaction {
     const transaction = new Transaction({ title, type, value })
     this.transactions.push(transaction)
     this.getBalance()
